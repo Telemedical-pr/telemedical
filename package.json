@@ -25,6 +25,7 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.1",
         "admin-lte": "^3.1.0-rc",
-        "overlayscrollbars": "^1.13.0"
+        "overlayscrollbars": "^1.13.0",
+        "sweetalert2": "^10.12.4"
     }
 }
