@@ -27,7 +27,7 @@ class DoctorsSeeder extends Seeder
             $doctor->gender = 'female';
         }
         $doctor->specialization = $faker->jobTitle;
-        $doctor->experience = $faker->numberBetween(5,35);
+        $doctor->start_year = $faker->numberBetween(2020,0);
         $doctor->institution = 'Nairobi Hospital';
         $doctor->email = $faker->email;
         $doctor->password = Hash::make('password');

@@ -18,7 +18,7 @@ class CreateDoctorsTable extends Migration
             $table->string('name');
             $table->string('gender');
             $table->string('specialization');
-            $table->bigInteger('experience');
+            $table->bigInteger('start_year');
             $table->string('institution');
             $table->string('email');
             $table->string('password');
