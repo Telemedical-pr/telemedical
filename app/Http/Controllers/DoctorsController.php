@@ -55,14 +55,14 @@ class DoctorsController extends Controller
             'email'=>'required',
             'password'=>'min:8',
             'password_confirmation'=>'required_with:password|same:password|min:6',
-            'image'=>'required|max:10000'
+            'image'=>'required|max:10000|mimes:jpeg,jpg'
         ]);
 
         $image = $request->file('image');
+        $title = Str::slug($request->name);
+        $date = Carbon::now()->toDateString();
 
         if(isset($image)){
-            $date = Carbon::now()->toDateString();
-            $title = Str::slug($request->name);
             $ext = $image->getClientOriginalExtension();
 
             $imagename = $date.'-'.$title.'.'.$ext;
