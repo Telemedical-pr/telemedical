@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @php
-    $doctors = App\Models\Doctor::all();
+    $doctors = App\Models\User::where('is_doctor', true);
 @endphp
 
 @section('content')

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -14,9 +15,16 @@ class DashboardController extends Controller
     {
         return view('dashboard');
     }
+
+
+
     public function prescriptions()
     {
         return view('prescriptions.index');
+    }
+    public function doctors()
+    {
+        return view('doctors.index');
     }
     public function uploadLogo(Request $request){
         $this->validate($request,[

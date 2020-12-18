@@ -20,7 +20,6 @@ require('./bootstrap');
             e.preventDefault()
             const form = new FormData
             form.append('logo',$('input#logo')[0].files[0])
-            console.log(form)
             Axios.post('api/logo-upload',form)
             .then((res) => {
                 if(res.status === 200){
@@ -40,7 +39,7 @@ require('./bootstrap');
             }).catch((err) => {
                 Toast.fire({
                     title:'Error',
-                    text:err,
+                    text:err.response.data.errors.logo[0],
                     icon:'error'
                 })
             });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -15,6 +16,11 @@ class DoctorsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware(['auth','admin'])->except('index');
+    }
+
     public function index()
     {
         return view('doctors.index');
@@ -27,6 +33,7 @@ class DoctorsController extends Controller
      */
     public function create()
     {
+
         return view('doctors.create');
     }
 
@@ -38,6 +45,7 @@ class DoctorsController extends Controller
      */
     public function store(Request $request)
     {
+        $this->middleware(['auth','admin']);
         $this->validate($request,[
             'name'=>'required',
             'gender'=>'required',
@@ -45,11 +53,12 @@ class DoctorsController extends Controller
             'start_year'=>'required|numeric',
             'institution'=>'required',
             'email'=>'required',
-            'password'=>'required|min:8|max:30',
-            'profileImage'=>'required|mimes:jpg,jpeg|max:3000'
+            'password'=>'min:8',
+            'password_confirmation'=>'required_with:password|same:password|min:6',
+            'image'=>'required|max:10000'
         ]);
 
-        $image = $request->file('profileImage');
+        $image = $request->file('image');
 
         if(isset($image)){
             $date = Carbon::now()->toDateString();
@@ -63,21 +72,25 @@ class DoctorsController extends Controller
             }
 
             $image->move('images/doctors', $imagename);
+        }else{
+            $imagename = 'default.jpg';
         }
 
-        $doctor = new Doctor();
+        $doctor = new User();
         $doctor->name = $request->name;
         $doctor->gender = $request->gender;
         $doctor->specialization = $request->specialization;
         $doctor->start_year = $request->start_year;
         $doctor->institution = $request->institution;
         $doctor->email = $request->email;
+        $doctor->is_patient = false;
+        $doctor->is_doctor = true;
         $doctor->password = Hash::make($request->password);
-        $doctor->profileImage = $imagename;
+        $doctor->image = $imagename;
 
         $doctor->save();
 
-        return redirect()->back()->with('successMsg',$request->name.' is now in the system');
+        return redirect('/doctors')->with('successMsg',$request->name.' is now in the system');
     }
 
     /**
@@ -88,7 +101,8 @@ class DoctorsController extends Controller
      */
     public function show($id)
     {
-        //
+        // Do Not use this Function!!!!
+
     }
 
     /**
@@ -99,7 +113,7 @@ class DoctorsController extends Controller
      */
     public function edit($id)
     {
-        $doctor = Doctor::find($id);
+        $doctor = User::find($id);
         return view('doctors.edit')->with('doctor', $doctor);
     }
 
@@ -112,7 +126,48 @@ class DoctorsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name'=>'required',
+            'gender'=>'required',
+            'specialization'=>'required',
+            'start_year'=>'required|numeric',
+            'institution'=>'required',
+            'email'=>'required',
+            'password'=>'required|min:8|max:30',
+            'image'=>'required|image|max:3000'
+        ]);
+
+        $image = $request->file('image');
+
+        if(isset($image)){
+            $date = Carbon::now()->toDateString();
+            $title = Str::slug($request->name);
+            $ext = $image->getClientOriginalExtension();
+
+            $imagename = $date.'-'.$title.'.'.$ext;
+
+            if(!file_exists('images/doctors')){
+                mkdir('images/doctors');
+            }
+
+            $image->move('images/doctors', $imagename);
+        }else{
+            $imagename = 'default.jpg';
+        }
+
+        $doctor = User::find($id);
+        $doctor->name = $request->name;
+        $doctor->gender = $request->gender;
+        $doctor->specialization = $request->specialization;
+        $doctor->start_year = $request->start_year;
+        $doctor->institution = $request->institution;
+        $doctor->email = $request->email;
+        $doctor->password = Hash::make($request->password);
+        $doctor->image = $imagename;
+
+        $doctor->save();
+
+        return redirect()->back()->with('successMsg', $request->name.' is has been edited');
     }
 
     /**
@@ -123,6 +178,9 @@ class DoctorsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $doctor = User::find($id);
+        unlink('/images/doctors/'.$doctor->image);
+        $doctor->delete();
+        return redirect()->back()->with('successMsg', 'Successfully Deleted');
     }
 }

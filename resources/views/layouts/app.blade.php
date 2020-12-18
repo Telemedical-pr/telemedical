@@ -51,6 +51,11 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        @if (auth()->user()->is_admin)
+                        <a class="dropdown-item" href="/doctors/create">
+                            Add new Doctor
+                        </a>
+                        @endif
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
@@ -100,10 +105,18 @@
                 </a>
               </li>
               <li class="nav-item menu-open">
-                <a href="/prescriptions" class="nav-link @if(Request::is('prescriptions')) active @endif ">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                <a href="/doctors" class="nav-link @if(Request::is('doctors')) active @endif ">
+                    <i class="fa fa-medkit nav-icon"></i>
                   <p>
-                    My Prescriptions
+                    Doctors
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item menu-open">
+                <a href="/prescriptions" class="nav-link @if(Request::is('prescriptions')) active @endif ">
+                    <i class="fa fa-medkit nav-icon"></i>
+                  <p>
+                    Prescriptions
                   </p>
                 </a>
               </li>
@@ -117,11 +130,15 @@
       @endauth
       <!-- Content Wrapper. Contains page content -->
       <div class="p-5 @if(Request::is('login')|| Request::is('register')) @else content-wrapper @endif">
+        <div class="container">
+            <x-responses/>
+        </div>
           @yield('content')
       </div>
 
 
     </div>
+
     <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
 </body>
 </html>

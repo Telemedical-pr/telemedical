@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect('/', '/dashboard');
-
+Route::get('/', [App\Http\Controllers\RoutesController::class, 'homepage'])->name('homepage');
+Route::redirect('/home', '/dashboard', 301);
 Auth::routes();
 
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 Route::get('/prescriptions', [App\Http\Controllers\DashboardController::class, 'prescriptions'])->name('prescriptions');
 
-Route::post('/api/logo-upload','App\Http\Controllers\DashboardController@uploadLogo')->middleware('auth');
+Route::resource('doctors', 'App\Http\Controllers\DoctorsController');
