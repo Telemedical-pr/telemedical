@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class Admin
+class Doctor
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,10 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->is_admin) {
+        if(auth()->user()->is_doctor){
             return $next($request);
         }else{
-            abort(403, 'You are not an admin');
+            abort(403,"You are not a doctor");
         }
     }
 }
