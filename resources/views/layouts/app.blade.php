@@ -83,11 +83,13 @@
         <div class="sidebar">
           <!-- Sidebar user panel (optional) -->
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            @if (auth()->user()->is_doctor)
             <div class="image">
-              <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-            </div>
+                <img src="images/doctors/{{auth()->user()->image}}" class="img-circle elevation-2" alt="User Image">
+              </div>
+            @endif
             <div class="info">
-              <a href="#" class="d-block">{{auth()->user()->name}}</a>
+              <a href="#" class="d-block">Dr. {{auth()->user()->name}}</a>
             </div>
           </div>
 
