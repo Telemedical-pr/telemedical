@@ -10,7 +10,7 @@
         <h1 class="text-center">Doc</h1>
         @endif
         @if (auth()->user()->is_patient)
-        <h1 class="text-center">Patient</h1>
+        <x-recent-visits/>
         @endif
 
     </div>

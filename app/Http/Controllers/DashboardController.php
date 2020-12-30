@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Visits;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -14,6 +15,7 @@ class DashboardController extends Controller
     public function index()
     {
         return view('dashboard');
+        // return Visits::paginate(5);
     }
 
 

@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->date('DOB')->nullable();
-            $table->string('gender');
+            $table->string('gender')->nullable();
             $table->float('last_temp')->nullable();
             $table->float('last_weight')->nullable();
             $table->float('last_height')->nullable();
