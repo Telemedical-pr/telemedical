@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Prescription extends Model
 {
+    protected $fillable = [
+        'symptom_id',
+        'prescription'
+    ];
     use HasFactory;
 
     public function symptoms()

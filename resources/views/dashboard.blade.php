@@ -7,10 +7,18 @@
         <x-addlogo/>
         @endif
         @if (auth()->user()->is_doctor)
-        <h1 class="text-center">Doc</h1>
+        <x-patient-symptoms/>
         @endif
         @if (auth()->user()->is_patient)
-        <x-recent-visits/>
+        <div class="row">
+            <div class="col-12">
+                <x-recent-visits/>
+            </div>
+            <div class="col-12">
+                <x-symptoms-form-modal/>
+            </div>
+        </div>
+
         @endif
 
     </div>

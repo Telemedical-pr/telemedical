@@ -47,8 +47,8 @@ require('./bootstrap');
 
     $('#prescriptionForm').submit(e=>{
         e.preventDefault();
-        let symptom_id = $("#symptom_id").val
-        let prescription = $("textarea#prescription").val
+        let symptom_id = $("#symptom_id").val()
+        let prescription = $("textarea#prescription").val()
         const form = new FormData
         if (prescription == null || symptom_id == null) {
             return Toast.fire({
@@ -68,18 +68,23 @@ require('./bootstrap');
                     icon:'success'
                 })
                 $('#prescriptionsFormModal').modal('hide')
+                document.getElementById('prescriptionForm').reset()
+                location.reload(true)
             }else{
                 Toast.fire({
                     title:'Hmmmmm....',
                     text:res.data,
                     icon:'warning'
                 })
+            }
         }).catch((err) => {
-            Toast.fire({
-                title:'Error',
-                text:err.response.data.errors.msg,
-                icon:'error'
-            })
+            for(const [key,value] of Object.entries(err.response.data.errors)){
+                Toast.fire({
+                    title:'Error',
+                    text:value[0],
+                    icon:'error'
+                })
+            }
             console.log( err.response.data.errors)
         });
 
@@ -89,19 +94,19 @@ require('./bootstrap');
     })
     $('#symptomForm').submit(e=>{
         e.preventDefault();
-        let user_id = $("input#user_id").val
-        let doctor_id = $("select#doctor_id").val
-        let symptom = $("textarea#syptom").val
+        let doctor = $("select#doctor_id").val()
+        let symptom = $("#symptom_text").val()
         const form = new FormData
-        if (doctor_id == null || symptom == null) {
+        if (doctor === null || symptom === null ) {
+            console.log(`${doctor}, ${symptom}`)
             return Toast.fire({
+
                 title:'Warning!',
                 icon:'warning',
                 text: 'Fill in all your Fields'
             })
         }
-        form.append('user_id' ,user_id)
-        form.append('doctor_id', doctor_id)
+        form.append('doctor', doctor)
         form.append('symptom', symptom)
         Axios.post('/api/symptoms', form)
         .then((res) => {
@@ -111,20 +116,25 @@ require('./bootstrap');
                     text:res.data,
                     icon:'success'
                 })
+
                 $('#symptomFormModal').modal('hide')
+                $('#symptomForm').reset()
             }else{
                 Toast.fire({
                     title:'Hmmmmm....',
                     text:res.data,
                     icon:'warning'
                 })
+            }
         }).catch((err) => {
-            Toast.fire({
-                title:'Error',
-                text:err.response.data.errors.msg,
-                icon:'error'
-            })
-            console.log( err.response.data.errors)
+            for(const [key,value] of Object.entries(err.response.data.errors)){
+                Toast.fire({
+                    title:'Error',
+                    text:value[0],
+                    icon:'error'
+                })
+            }
+
         });
 
 

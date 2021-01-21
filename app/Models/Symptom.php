@@ -7,14 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Symptom extends Model
 {
+
     use HasFactory;
 
     public function patients()
     {
-        return $this->belongsTo(User::class, 'id', 'patient_id' );
+        return $this->belongsTo(User::class, 'patient_id', 'id' );
     }
     public function doctors()
     {
         return $this->hasOne(User::class, 'id', 'doctor_id' );
     }
+
 }

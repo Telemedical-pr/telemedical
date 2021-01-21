@@ -38,7 +38,7 @@ class SymptomsController extends Controller
         $symptom = new Symptom();
         $symptom->doctor_id = $request->doctor;
         $symptom->symptom = $request->symptom;
-        $symptom->user_id = auth()->user()->id;
+        $symptom->patient_id = auth()->user()->id;
 
         $symptom->save();
 
@@ -74,7 +74,7 @@ class SymptomsController extends Controller
         $symptom = Symptom::find($id);
         $symptom->doctor_id = $request->doctor;
         $symptom->symptom = $request->symptom;
-        $symptom->user_id = auth()->user()->id;
+        $symptom->patient_id = auth()->user()->id;
 
         $symptom->save();
 

@@ -1,10 +1,10 @@
 <!-- Button trigger modal -->
 @php
-    $doctors = User::where('is_doctor', true)->get();
+    $doctors = App\Models\User::where('is_doctor', true)->get();
 @endphp
 
 
-<a data-toggle="modal" data-target="#symptomFormModal">Symptoms</a>
+<a class="btn btn-sm btn-primary w-100" data-toggle="modal" data-target="#symptomFormModal">Symptoms</a>
 <!-- Modal -->
 <div class="modal fade" id="symptomFormModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -20,7 +20,6 @@
                             <form id="symptomForm">
                                 @csrf
 
-                                <input type="hidden" name="user_id" value="{{auth()->user()->id}}" id="user_id">
 
                                 {{-- Doctor Selection --}}
                                 <div class="form-group row">
@@ -29,7 +28,7 @@
                                     <div class="col-md-6">
                                         <select name="doctor" id="doctor_id" required class="form-control">
                                             @foreach ($doctors as $doctor)
-                                                <option value="{{$doctor->id}}">Dr. {{$doctor->name}}<b>{{"(".$doctor->specialization.")"}}</b> </option>
+                                                <option value="{{$doctor->id}}">Dr. {{$doctor->name}}<b>{{" (".$doctor->specialization.")"}}</b> </option>
                                             @endforeach
                                         </select>
 
@@ -47,7 +46,7 @@
                                     <label for="symptom" class="col-md-4 col-form-label text-md-right">{{ __('Symptoms') }}</label>
 
                                     <div class="col-md-6">
-                                        <textarea name="symptom" id="symptom" cols="30" rows="10" class="form-control"></textarea>
+                                        <textarea name="symptom" id="symptom_text" cols="30" rows="10" class="form-control"></textarea>
 
                                         @error('symptom')
                                             <span class="invalid-feedback" role="alert">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Prescription;
 use Illuminate\Http\Request;
 
 class PrescriptionsController extends Controller
@@ -13,7 +14,7 @@ class PrescriptionsController extends Controller
      */
     public function index()
     {
-        //
+        return Prescription::all();
     }
 
     /**
@@ -24,7 +25,19 @@ class PrescriptionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'symptom_id'=>'required',
+            'prescription'=>'required',
+        ]);
+
+        if (Prescription::where('symptom_id', $request->symptom_id)->first()) {
+            $this->update($request, $request->symptom_id);
+        }else{
+            Prescription::create($request->all());
+        }
+
+        return response("Successfully delivered your patient's Prescription", 200);
+
     }
 
     /**
@@ -35,7 +48,7 @@ class PrescriptionsController extends Controller
      */
     public function show($id)
     {
-        //
+        return Prescription::find($id);
     }
 
     /**
@@ -47,7 +60,14 @@ class PrescriptionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'symptom_id'=>'required',
+            'prescription'=>'required',
+        ]);
+
+        Prescription::where('symptom_id', $id)->update($request->all());
+
+        return response("Successfully Updated your patient's Prescription", 200);
     }
 
     /**
