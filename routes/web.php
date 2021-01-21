@@ -12,12 +12,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::redirect('/', '/dashboard');
-
+Route::redirect('/home', '/dashboard', 301);
 Auth::routes();
 
-Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-Route::get('/prescriptions', [App\Http\Controllers\DashboardController::class, 'prescriptions'])->name('prescriptions');
+Route::redirect('', '/dashboard', 301);
 
-Route::post('/api/logo-upload','App\Http\Controllers\DashboardController@uploadLogo')->middleware('auth');
+Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+
+Route::resource('doctors', 'App\Http\Controllers\DoctorsController');
+
+
+Route::group(['prefix'=>'api'], function(){
+    Route::apiresource('symptoms', 'App\Http\Controllers\SymptomsController');
+    Route::apiresource('prescriptions', 'App\Http\Controllers\PrescriptionsController');
+});

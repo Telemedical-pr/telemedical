@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Visits;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -13,10 +15,18 @@ class DashboardController extends Controller
     public function index()
     {
         return view('dashboard');
+        // return Visits::paginate(5);
     }
+
+
+
     public function prescriptions()
     {
         return view('prescriptions.index');
+    }
+    public function doctors()
+    {
+        return view('doctors.index');
     }
     public function uploadLogo(Request $request){
         $this->validate($request,[
