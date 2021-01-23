@@ -1,10 +1,11 @@
-<!-- Button trigger modal -->
+{{-- To be accessed by patients only --}}
+
 @php
     $doctors = App\Models\User::where('is_doctor', true)->get();
 @endphp
 
 
-<a class="btn btn-sm btn-primary w-100" data-toggle="modal" data-target="#symptomFormModal">Symptoms</a>
+<a class="btn btn-sm btn-primary w-100" data-toggle="modal" data-target="#symptomFormModal">Give your doctor your symptoms</a>
 <!-- Modal -->
 <div class="modal fade" id="symptomFormModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">

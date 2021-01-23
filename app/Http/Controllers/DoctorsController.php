@@ -23,19 +23,9 @@ class DoctorsController extends Controller
 
     public function index()
     {
-        return view('doctors.index');
+        return User::where('isDoctor', true)->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
-        return view('doctors.create');
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -90,7 +80,7 @@ class DoctorsController extends Controller
 
         $doctor->save();
 
-        return redirect('/doctors')->with('successMsg',$request->name.' is now in the system');
+        return response($request->name.' is now in the system', 200);
     }
 
     /**
@@ -101,20 +91,8 @@ class DoctorsController extends Controller
      */
     public function show($id)
     {
-        // Do Not use this Function!!!!
+        return User::find($id);
 
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $doctor = User::find($id);
-        return view('doctors.edit')->with('doctor', $doctor);
     }
 
     /**
@@ -179,8 +157,8 @@ class DoctorsController extends Controller
     public function destroy($id)
     {
         $doctor = User::find($id);
-        unlink('/images/doctors/'.$doctor->image);
+        $this->unlink('/images/doctors/'.$doctor->image);
         $doctor->delete();
-        return redirect()->back()->with('successMsg', 'Successfully Deleted');
+        return response('Successfully Deleted'.$doctor->name);
     }
 }

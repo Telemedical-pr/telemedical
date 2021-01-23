@@ -18,5 +18,8 @@ class Symptom extends Model
     {
         return $this->hasOne(User::class, 'id', 'doctor_id' );
     }
-
+    public function prescripions()
+    {
+        return $this->hasOne(Prescription::class, 'id', 'symptom_id');
+    }
 }
