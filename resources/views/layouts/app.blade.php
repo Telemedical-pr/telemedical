@@ -24,7 +24,7 @@
 
       @auth
         <!-- Navbar -->
-      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <nav class="main-header navbar navbar-expand fixed-top navbar-white navbar-light">
         <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
@@ -89,7 +89,7 @@
               </div>
             @endif
             <div class="info">
-              <a href="#" class="d-block">Dr. {{auth()->user()->name}}</a>
+              <a href="#" class="d-block">@if(auth()->user()->is_doctor) Dr. @endif {{auth()->user()->name}}</a>
             </div>
           </div>
 
@@ -106,22 +106,67 @@
                   </p>
                 </a>
               </li>
+
+              {{-- Doctors Routes --}}
+              @if (auth()->user()->is_doctor)
               <li class="nav-item menu-open">
-                <a href="/doctors" class="nav-link @if(Request::is('doctors')) active @endif ">
-                    <i class="fa fa-medkit nav-icon"></i>
+                <a href="/appointments" class="nav-link @if(Request::is('appointments')) active @endif">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>
-                    Doctors
+                    Appointments Calendar
                   </p>
                 </a>
               </li>
               <li class="nav-item menu-open">
-                <a href="/prescriptions" class="nav-link @if(Request::is('prescriptions')) active @endif ">
-                    <i class="fa fa-medkit nav-icon"></i>
+                <a href="/doc_profile" class="nav-link @if(Request::is('doc_profile')) active @endif">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>
-                    Prescriptions
+                    My Profile
                   </p>
                 </a>
               </li>
+
+
+              {{-- Admins Routes --}}
+              @elseif (auth()->user()->is_admin)
+              <li class="nav-item menu-open">
+                <a href="/system" class="nav-link @if(Request::is('system')) active @endif">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    System Users
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item menu-open">
+                <a href="/all_appointments" class="nav-link @if(Request::is('all_appointments')) active @endif">
+                  <i class="fas fa-calendar fa-9x  "></i>
+                  <p>
+                    All Appointments
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item menu-open">
+                <a href="/all_symptoms" class="nav-link @if(Request::is('all_symptoms')) active @endif">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    All Symptoms
+                  </p>
+                </a>
+              </li>
+
+
+              {{-- Patients Routes --}}
+              @else
+              <li class="nav-item menu-open">
+                <a href="/dashboard" class="nav-link @if(Request::is('dashboard')) active @endif">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    Dashboard
+                  </p>
+                </a>
+              </li>
+
+              @endif
             </ul>
           </nav>
           <!-- /.sidebar-menu -->
@@ -131,7 +176,7 @@
 
       @endauth
       <!-- Content Wrapper. Contains page content -->
-      <div class="p-5 @if(Request::is('login')|| Request::is('register')) @else content-wrapper @endif">
+      <div class="@if(!Request::is('login') && !Request::is('register'))  content-wrapper @else p-5  @endif">
         <div class="container">
             <x-responses/>
         </div>
@@ -142,5 +187,7 @@
     </div>
 
     <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+    @stack('scripts')
 </body>
 </html>
+

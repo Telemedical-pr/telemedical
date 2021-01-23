@@ -45,6 +45,8 @@ require('./bootstrap');
             });
         })
 
+
+        // Prescription Form
     $('#prescriptionForm').submit(e=>{
         e.preventDefault();
         let symptom_id = $("#symptom_id").val()
@@ -91,7 +93,9 @@ require('./bootstrap');
 
 
 
-    })
+    });
+
+    // Symptoms Form
     $('#symptomForm').submit(e=>{
         e.preventDefault();
         let doctor = $("select#doctor_id").val()
@@ -118,7 +122,8 @@ require('./bootstrap');
                 })
 
                 $('#symptomFormModal').modal('hide')
-                $('#symptomForm').reset()
+                document.getElementById('symptomForm').reset()
+                location.reload(true)
             }else{
                 Toast.fire({
                     title:'Hmmmmm....',
@@ -136,12 +141,57 @@ require('./bootstrap');
             }
 
         });
-
-
-
-
     })
 
+        // Appointment Form
+    $('#appointmentForm').submit(e=>{
+        e.preventDefault();
+        let doctor = $("select#doctor_id2").val()
+        let reason = $("#reason_text").val()
+        let date = $("#date1").val()
+        const form = new FormData
+        if (doctor === null || symptom === null ) {
+            console.log(`${doctor}, ${symptom}`)
+            return Toast.fire({
+
+                title:'Warning!',
+                icon:'warning',
+                text: 'Fill in all your Fields'
+            })
+        }
+        form.append('doctor', doctor)
+        form.append('reason', reason)
+        form.append('appointment_dateTime', date)
+        Axios.post('/api/visits', form)
+        .then((res) => {
+            if(res.status === 200){
+                Toast.fire({
+                    title:'success',
+                    text:res.data,
+                    icon:'success'
+                })
+
+                $('#appointmentFormModal').modal('hide')
+                document.getElementById('appointmentForm').reset()
+                location.reload(true)
+            }else{
+                Toast.fire({
+                    title:'Hmmmmm....',
+                    text:res.data,
+                    icon:'warning'
+                })
+            }
+        }).catch((err) => {
+            for(const [key,value] of Object.entries(err.response.data.errors)){
+                Toast.fire({
+                    title:'Error',
+                    text:value[0],
+                    icon:'error'
+                })
+            }
+
+        });
+    })
 
 
 })(jQuery)

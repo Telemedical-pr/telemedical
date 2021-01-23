@@ -19,10 +19,12 @@ Route::redirect('', '/dashboard', 301);
 
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
-Route::resource('doctors', 'App\Http\Controllers\DoctorsController');
+
 
 
 Route::group(['prefix'=>'api'], function(){
     Route::apiresource('symptoms', 'App\Http\Controllers\SymptomsController');
     Route::apiresource('prescriptions', 'App\Http\Controllers\PrescriptionsController');
+    Route::apiresource('visits', 'App\Http\Controllers\VisitsController');
+    Route::apiresource('doctors', 'App\Http\Controllers\DoctorsController');
 });
