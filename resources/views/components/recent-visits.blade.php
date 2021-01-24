@@ -1,13 +1,13 @@
 {{-- To be accessed by Patients Only --}}
 
 @php
-    $visits = App\Models\Visits::where('patient_id', auth()->user()->id)->get();
+    $visits = App\Models\Visit::where('patient_id', auth()->user()->id)->get();
 
 @endphp
 
 <div class="card my-3">
     <div class="card-header bg-dark">
-      <h3 class="card-title">My Recent Visits</h3>
+      <h3 class="card-title">Visits to make / been made</h3>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -60,7 +60,11 @@
                     </div>
                 </div>
             </div>
+            <div class="container">
+                <x-book-appointment/>
+            </div>
         </div>
+
     </div>
     <!-- /.card-body -->
   </div>

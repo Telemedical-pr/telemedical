@@ -95,6 +95,56 @@ require('./bootstrap');
 
     });
 
+
+    // Diagnosis Form
+    $('#diagnosisForm').submit(e=>{
+        e.preventDefault();
+        let visit_id = $("#visit_id").val()
+        let diagnosis = $("textarea#diagnosis").val()
+        const form = new FormData
+        if (diagnosis == null || visit_id == null) {
+            return Toast.fire({
+                title:'Warning!',
+                icon:'warning',
+                text: 'Fill in all your Fields'
+            })
+        }
+        form.append('visit_id' ,visit_id)
+        form.append('diagnosis', diagnosis)
+        Axios.post('/api/diagnosis', form)
+        .then((res) => {
+            if(res.status === 200){
+                Toast.fire({
+                    title:'success',
+                    text:res.data,
+                    icon:'success'
+                })
+                $('#diagnosisFormModal').modal('hide')
+                document.getElementById('diagnosisForm').reset()
+                location.reload(true)
+            }else{
+                Toast.fire({
+                    title:'Hmmmmm....',
+                    text:res.data,
+                    icon:'warning'
+                })
+            }
+        }).catch((err) => {
+            for(const [key,value] of Object.entries(err.response.data.errors)){
+                Toast.fire({
+                    title:'Error',
+                    text:value[0],
+                    icon:'error'
+                })
+            }
+            console.log( err.response.data.errors)
+        });
+
+
+
+
+    });
+
     // Symptoms Form
     $('#symptomForm').submit(e=>{
         e.preventDefault();
@@ -150,8 +200,7 @@ require('./bootstrap');
         let reason = $("#reason_text").val()
         let date = $("#date1").val()
         const form = new FormData
-        if (doctor === null || symptom === null ) {
-            console.log(`${doctor}, ${symptom}`)
+        if (doctor === null || reason === null || date === null) {
             return Toast.fire({
 
                 title:'Warning!',

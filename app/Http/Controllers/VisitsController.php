@@ -47,6 +47,7 @@ class VisitsController extends Controller
         $visit->doctor_id = $request->doctor;
         $visit->reason = $request->reason;
         $visit->appointment_dateTime = $request->appointment_dateTime;
+        $visit->patient_id = auth()->user()->id;
 
         $visit->save();
 

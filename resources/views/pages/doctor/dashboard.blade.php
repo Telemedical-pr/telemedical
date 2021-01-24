@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@php
+    $appointments = App\Models\Visit::where('doctor_id', auth()->user()->id)->get();
+    $prescriptions = DB::table('prescriptions')->join('symptoms', 'symptoms.id', '=', 'prescriptions.symptom_id')->join('users', 'users.id', '=', 'symptoms.doctor_id')->get();
+    $diagnosis = DB::table('diagnoses')->join('visits', 'visits.id', '=', 'diagnoses.visit_id')->join('users', 'users.id', '=', 'visits.doctor_id')->get();
+@endphp
+
 @section('content')
 <div class="content-header">
     <div class="container-fluid">
@@ -23,9 +29,9 @@
             <!-- small box -->
             <div class="small-box bg-primary">
               <div class="inner">
-                <h3>150</h3>
+                <h3>{{count($appointments)}}</h3>
 
-                <p>Pending Appointments</p>
+                <p>Appointments</p>
               </div>
               <div class="icon">
                 <i class="ion ion-bag"></i>
@@ -37,7 +43,7 @@
             <!-- small box -->
             <div class="small-box bg-white border border-primary shadow-sm">
               <div class="inner">
-                <h3>53</h3>
+                <h3>{{count($prescriptions)}}</h3>
 
                 <p>Prescriptions Given</p>
               </div>
@@ -51,7 +57,7 @@
             <!-- small box -->
             <div class="small-box bg-primary">
               <div class="inner">
-                <h3>44</h3>
+                <h3>{{count($diagnosis)}}</h3>
 
                 <p>Diagnosis Given</p>
               </div>

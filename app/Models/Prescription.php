@@ -15,6 +15,6 @@ class Prescription extends Model
 
     public function symptoms()
     {
-        return $this->hasOne(Symptom::class, 'id', 'symptom_id');
+        return $this->belongsTo(Symptom::class, 'id', 'symptom_id');
     }
 }

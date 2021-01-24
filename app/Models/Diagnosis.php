@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Diagnosis extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'visit_id',
+        'diagnosis'
+    ];
+
+    public function visits()
+    {
+        return $this->belongsTo(Visit::class, 'id', 'visit_id');
+    }
 }
