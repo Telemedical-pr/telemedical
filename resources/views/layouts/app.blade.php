@@ -130,7 +130,7 @@
               {{-- Admins Routes --}}
               @elseif (auth()->user()->is_admin)
               <li class="nav-item menu-open">
-                <a href="/system" class="nav-link @if(Request::is('system')) active @endif">
+                <a href="/system-users" class="nav-link @if(Request::is('system-users')) active @endif">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>
                     System Users
@@ -139,7 +139,7 @@
               </li>
               <li class="nav-item menu-open">
                 <a href="/all_appointments" class="nav-link @if(Request::is('all_appointments')) active @endif">
-                  <i class="fas fa-calendar fa-9x  "></i>
+                  <i class="nav-icon fas fa-calendar"></i>
                   <p>
                     All Appointments
                   </p>
@@ -158,11 +158,12 @@
               {{-- Patients Routes --}}
               @else
               <li class="nav-item menu-open">
-                <a href="/dashboard" class="nav-link @if(Request::is('dashboard')) active @endif">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>
-                    Dashboard
-                  </p>
+                <a href="/doctors" class="nav-link @if(Request::is('doctors')) active @endif">
+
+                    <i class="fas fa-briefcase-medical  nav-icon"></i>
+                    <p>
+                        Doctors
+                    </p>
                 </a>
               </li>
 
@@ -186,7 +187,6 @@
 
     </div>
 
-    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
     @stack('scripts')
 </body>
 </html>

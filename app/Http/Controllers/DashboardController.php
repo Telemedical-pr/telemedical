@@ -26,7 +26,7 @@ class DashboardController extends Controller
     }
     public function doctors()
     {
-        return view('doctors.index');
+        return view('pages.patient.doctors');
     }
     public function uploadLogo(Request $request){
         $this->validate($request,[
@@ -46,4 +46,7 @@ class DashboardController extends Controller
             return response('Image is Required and it is not found', 404);
         }
     }
+
 }
+
+

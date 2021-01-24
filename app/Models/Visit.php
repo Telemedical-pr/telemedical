@@ -9,6 +9,7 @@ class Visit extends Model
 {
     use HasFactory;
 
+
     public function doctors()
     {
         return $this->belongsTo(User::class,'doctor_id', 'id');

@@ -23,7 +23,14 @@
                         <td scope="row">{{$visit->appointment_dateTime}}</td>
                         <td>{{$visit->patients->name}}</td>
                         <td>{{$visit->reason}}</td>
-                        <td>{{$visit->diagnosis->diagnosis}}</td>
+                        <td>
+                            @if (App\Models\Diagnosis::firstWhere('visit_id', $visit->id) == null)
+                            <x-diagnosisModalForm :value="$visit->id" :edit="false" />
+                            @else
+                            <p class="text-success">{{App\Models\Diagnosis::where('visit_id',$visit->id)->first()->diagnosis}}</p>
+                            <x-diagnosisModalForm :value="$visit->id" :edit="true"/>
+                            @endif
+                        </td>
                     </tr>
                     @endforeach
 

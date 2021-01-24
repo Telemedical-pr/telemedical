@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@php
+    $symptoms = App\Models\Symptom::where('patient_id', auth()->user()->id)->get();
+    $prescriptions = DB::table('prescriptions')->join('symptoms', 'symptoms.id', '=' ,'prescriptions.symptom_id')->join('users', 'users.id', '=' ,'symptoms.patient_id')->where('users.id', auth()->user()->id)->get();
+@endphp
+
 @section('content')
 <div class="content-header">
     <div class="container-fluid">
@@ -23,7 +28,7 @@
               <!-- small box -->
               <div class="small-box bg-primary">
                 <div class="inner">
-                  <h3>150</h3>
+                  <h3>{{count($symptoms)}}</h3>
 
                   <p>Symptoms Sent</p>
                 </div>
@@ -38,7 +43,7 @@
               <!-- small box -->
               <div class="small-box bg-white border border-primary shadow-sm">
                 <div class="inner">
-                  <h3>53</h3>
+                  <h3>{{count($prescriptions)}}</h3>
 
                   <p>Prescriptions Given</p>
                 </div>
