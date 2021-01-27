@@ -19,15 +19,22 @@ class DashboardController extends Controller
     }
 
 
-
-    public function prescriptions()
-    {
-        return view('prescriptions.index');
-    }
     public function doctors()
     {
-        return view('pages.patient.doctors');
+        return view('doctors');
     }
+
+    public function systemUsers()
+    {
+        return view('pages.admin.system-users');
+    }
+
+    public function profile()
+    {
+        return view('profile');
+    }
+
+
     public function uploadLogo(Request $request){
         $this->validate($request,[
             'logo'=>'required|mimes:png'

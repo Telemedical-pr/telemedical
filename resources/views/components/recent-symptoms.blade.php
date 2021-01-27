@@ -8,17 +8,7 @@
     <div class="card-header bg-dark">
       <h3 class="card-title">Recently Given Symptoms</h3>
 
-      <div class="card-tools">
-        <div class="input-group input-group-sm" style="width: 150px;">
-          <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
 
-          <div class="input-group-append">
-            <button type="submit" class="btn btn-default">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
     <!-- /.card-header -->
     <div class="card-body table-responsive p-0" style="height: 300px;">
@@ -47,6 +37,31 @@
                             <button type="button" class="btn btn-secondary btn-sm w-100" data-toggle="modal" data-target="#modelId">
                                 View profile
                               </button>
+                              <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <div class="container-fluid">
+                                            <div class="card text-white bg-dark">
+                                                <img class="card-img-top" src="/images/doctors/{{$symptom->doctors->image}}" alt="">
+                                                <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                            <h4 class="card-title">{{$symptom->doctors->name}}</h4>
+                                                            <p class="card-text">{{$symptom->doctors->specialization}}</p>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <p class="card-text">Age: <b>{{ $symptom->doctors->getAge() }}</b></p>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </td>
@@ -72,27 +87,3 @@
   </div>
 
    <!-- Modal -->
-   <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="container-fluid">
-                   <div class="card text-white bg-dark">
-                     <img class="card-img-top" src="/images/doctors/{{$symptom->doctors->image}}" alt="">
-                     <div class="card-body">
-                       <div class="row">
-                           <div class="col-6">
-                                <h4 class="card-title">{{$symptom->doctors->name}}</h4>
-                                <p class="card-text">{{$symptom->doctors->specialization}}</p>
-                           </div>
-                           <div class="col-6">
-                               <p class="card-text">Age: <b>{{ $symptom->doctors->getAge() }}</b></p>
-                           </div>
-                       </div>
-                     </div>
-                   </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@php
+    $doctors = App\Models\User::where('is_doctor', true)->get();
+    $patients = App\Models\User::where('is_patient', true)->get();
+    $symptoms = App\Models\Symptom::all();
+@endphp
 @section('content')
 
 <div class="content-header">
@@ -24,7 +29,7 @@
             <!-- small box -->
             <div class="small-box bg-primary">
               <div class="inner">
-                <h3>150</h3>
+                <h3>{{count($doctors)}}</h3>
 
                 <p>Doctors Registered</p>
               </div>
@@ -38,7 +43,7 @@
             <!-- small box -->
             <div class="small-box bg-white border border-primary shadow-sm">
               <div class="inner">
-                <h3>53</h3>
+                <h3>{{count($patients)}}</h3>
 
                 <p>Patients Registered</p>
               </div>
@@ -52,7 +57,7 @@
             <!-- small box -->
             <div class="small-box bg-primary">
               <div class="inner">
-                <h3>44</h3>
+                <h3>{{count($symptoms)}}</h3>
 
                 <p>Symptom Interactions</p>
               </div>

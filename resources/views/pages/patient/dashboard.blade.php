@@ -3,6 +3,7 @@
 @php
     $symptoms = App\Models\Symptom::where('patient_id', auth()->user()->id)->get();
     $prescriptions = DB::table('prescriptions')->join('symptoms', 'symptoms.id', '=' ,'prescriptions.symptom_id')->join('users', 'users.id', '=' ,'symptoms.patient_id')->where('users.id', auth()->user()->id)->get();
+    $visits = App\Models\Visit::where('patient_id', auth()->user()->id)->get();
 @endphp
 
 @section('content')
@@ -58,7 +59,7 @@
               <!-- small box -->
               <div class="small-box bg-primary">
                 <div class="inner">
-                  <h3>44</h3>
+                  <h3>{{count($visits)}}</h3>
 
                   <p>Visits Made</p>
                 </div>
