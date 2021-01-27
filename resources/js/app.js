@@ -240,7 +240,100 @@ require('./bootstrap');
             }
 
         });
-    })
+    });
+
+
+    // Patient Profile Form
+    $('#patientProfile').submit(e=>{
+        e.preventDefault()
+        let gender = $('select#gender').val()
+        let DOB = $('input#DOB').val()
+        let last_temp = $('input#last_temp').val()
+        let last_weight = $('input#last_weight').val()
+        let last_height = $('input#last_height').val()
+        let unit_weight = $('select#unit_weight').val()
+        let unit_height = $('select#unit_height').val()
+        let image = $('input#profileImage')[0].files[0]
+
+        let form = new FormData
+        if(gender) form.append('gender', gender)
+        if(DOB) form.append('DOB', DOB)
+        if(last_temp) form.append('last_temp', last_temp)
+        if(last_weight) form.append('last_weight', last_weight)
+        if(last_height) form.append('last_height', last_height)
+        if(unit_weight) form.append('unit_weight', unit_weight)
+        if(unit_height) form.append('unit_height', unit_height)
+        if(image) form.append('image', image)
+
+        Axios.post('/api/patient_update', form)
+        .then((res) => {
+            if(res.status === 200){
+                Toast.fire({
+                    title:'success',
+                    text:res.data,
+                    icon:'success'
+                })
+                document.getElementById('patientProfile').reset()
+                location.reload(true)
+            }else{
+                Toast.fire({
+                    title:'Hmmmmm....',
+                    text:res.data,
+                    icon:'warning'
+                })
+            }
+        }).catch((err) => {
+            for(const [key,value] of Object.entries(err.response.data.errors)){
+                Toast.fire({
+                    title:'Error',
+                    text:value[0],
+                    icon:'error'
+                })
+            }
+        });
+    });
+
+
+    // Doctor's Profile
+    $('#doctorProfile').submit(e=>{
+        e.preventDefault()
+        let institution = $('input#institution').val()
+        let start_year = $('input#start_year').val()
+        let image = $('input#profileImage2')[0].files[0]
+
+        let form = new FormData
+        if(institution) form.append('institution', institution)
+        if(start_year) form.append('start_year', start_year)
+        if(image) form.append('image', image)
+
+        Axios.post('/api/doctor_update', form)
+        .then((res) => {
+            if(res.status === 200){
+                Toast.fire({
+                    title:'success',
+                    text:res.data,
+                    icon:'success'
+                })
+                document.getElementById('doctorProfile').reset()
+                location.reload(true)
+            }else{
+                Toast.fire({
+                    title:'Hmmmmm....',
+                    text:res.data,
+                    icon:'warning'
+                })
+            }
+        }).catch((err) => {
+            for(const [key,value] of Object.entries(err.response.data.errors)){
+                Toast.fire({
+                    title:'Error',
+                    text:value[0],
+                    icon:'error'
+                })
+            }
+        });
+    });
+
 
 
 })(jQuery)

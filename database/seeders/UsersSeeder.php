@@ -49,7 +49,7 @@ class UsersSeeder extends Seeder
         $user->DOB = $faker->date();
         $user->gender = 'male';
         $user->image = 'default.jpg';
-        $user->specialization = 'Sth Else';
+        $user->specialization = $faker->numberBetween(1,20);
         $user->email = 'doctor.example@teleconsult.com';
         $user->password = Hash::make('1234567890');
         $user->last_temp = $faker->numberBetween(30,40);

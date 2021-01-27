@@ -21,10 +21,12 @@
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
-
+        <div class="container mt-2">
+            <x-responses></x-responses>
+        </div>
       @auth
         <!-- Navbar -->
-      <nav class="main-header navbar navbar-expand fixed-top navbar-white navbar-light">
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
@@ -83,9 +85,9 @@
         <div class="sidebar">
           <!-- Sidebar user panel (optional) -->
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            @if (auth()->user()->is_doctor)
+            @if (auth()->user()->image)
             <div class="image">
-                <img src="images/doctors/{{auth()->user()->image}}" class="img-circle elevation-2" alt="User Image">
+                <img src="images/@if(auth()->user()->is_doctor){{ __('doctors')}}@else{{__('patients')}}@endif/{{auth()->user()->image}}" class="img-circle elevation-2" alt="User Image">
               </div>
             @endif
             <div class="info">
@@ -106,53 +108,33 @@
                   </p>
                 </a>
               </li>
+              @if (!auth()->user()->is_admin)
+              <li class="nav-item menu-open">
+                <a href="/profile" class="nav-link @if(Request::is('profile')) active @endif">
+                  <i class="nav-icon fas fa-user"></i>
+                  <p>
+                    Profile
+                  </p>
+                </a>
+              </li>
+              @endif
 
               {{-- Doctors Routes --}}
               @if (auth()->user()->is_doctor)
-              <li class="nav-item menu-open">
-                <a href="/appointments" class="nav-link @if(Request::is('appointments')) active @endif">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>
-                    Appointments Calendar
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item menu-open">
-                <a href="/doc_profile" class="nav-link @if(Request::is('doc_profile')) active @endif">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>
-                    My Profile
-                  </p>
-                </a>
-              </li>
+
 
 
               {{-- Admins Routes --}}
               @elseif (auth()->user()->is_admin)
               <li class="nav-item menu-open">
-                <a href="/system-users" class="nav-link @if(Request::is('system-users')) active @endif">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                <a href="/system_users" class="nav-link @if(Request::is('system_users')) active @endif">
+                  <i class="nav-icon fas fa-user-alt"></i>
                   <p>
                     System Users
                   </p>
                 </a>
               </li>
-              <li class="nav-item menu-open">
-                <a href="/all_appointments" class="nav-link @if(Request::is('all_appointments')) active @endif">
-                  <i class="nav-icon fas fa-calendar"></i>
-                  <p>
-                    All Appointments
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item menu-open">
-                <a href="/all_symptoms" class="nav-link @if(Request::is('all_symptoms')) active @endif">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>
-                    All Symptoms
-                  </p>
-                </a>
-              </li>
+
 
 
               {{-- Patients Routes --}}
@@ -177,17 +159,14 @@
 
       @endauth
       <!-- Content Wrapper. Contains page content -->
-      <div class="@if(!Request::is('login') && !Request::is('register'))  content-wrapper @else p-5  @endif">
-        <div class="container">
-            <x-responses/>
-        </div>
-          @yield('content')
+      <div class="@if(!Request::is('login') && !Request::is('register')) content-wrapper @else p-5 @endif">
+        @yield('content')
+
       </div>
 
 
     </div>
 
-    @stack('scripts')
 </body>
 </html>
 

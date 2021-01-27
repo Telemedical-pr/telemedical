@@ -29,7 +29,7 @@
                                     <div class="col-md-6">
                                         <select name="doctor" id="doctor_id" required class="form-control">
                                             @foreach ($doctors as $doctor)
-                                                <option value="{{$doctor->id}}">Dr. {{$doctor->name}}<b>{{" (".$doctor->specialization.")"}}</b> </option>
+                                                <option value="{{$doctor->id}}">Dr. {{$doctor->name}} @if($doctor->docSpecialization) <strong>({{$doctor->docSpecialization->category}})</strong> @endif </option>
                                             @endforeach
                                         </select>
 

@@ -1,3 +1,6 @@
+@php
+    $specs = App\Models\Category::all();
+@endphp
 
 <div class="card">
     <div class="card-header bg-dark">
@@ -43,7 +46,10 @@
 
                 <div class="col-md-6">
                     <select id="specialization" class="form-control @error('specialization') is-invalid @enderror" name="specialization" value="{{ old('specialization') }}" required autocomplete="specialization" autofocus>
-                        <x-specializations/>
+                        <option selected disabled>Select Your Doctor's Specialization</option>
+                        @foreach ($specs as $spec)
+                        <option value="{{$spec->id}}">{{$spec->category}}</option>
+                        @endforeach
                     </select>
 
                     @error('name')
