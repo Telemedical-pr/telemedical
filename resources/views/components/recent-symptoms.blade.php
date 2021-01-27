@@ -31,7 +31,7 @@
                 <td>
                     <div class="row">
                         <div class="col-12">
-                            {{$symptom->doctors->name}} - ({{$symptom->doctors->specialization}})
+                            {{$symptom->doctors->name}} - ({{$symptom->doctors->docspecialization->category}})
                         </div>
                         <div class="col-12">
                             <button type="button" class="btn btn-secondary btn-sm w-100" data-toggle="modal" data-target="#modelId">
@@ -48,7 +48,7 @@
                                                 <div class="row">
                                                     <div class="col-6">
                                                             <h4 class="card-title">{{$symptom->doctors->name}}</h4>
-                                                            <p class="card-text">{{$symptom->doctors->specialization}}</p>
+                                                            <p class="card-text">{{$symptom->doctors->docspecialization->category}}</p>
                                                     </div>
                                                     <div class="col-6">
                                                         <p class="card-text">Age: <b>{{ $symptom->doctors->getAge() }}</b></p>
