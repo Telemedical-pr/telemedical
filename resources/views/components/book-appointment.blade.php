@@ -29,7 +29,7 @@
                                         <select name="doctor" id="doctor_id2" required class="form-control">
                                             <option selected disabled>Select your Preferred Doctor</option>
                                             @foreach ($doctors as $doctor)
-                                            <option value="{{$doctor->id}}">Dr. {{$doctor->name}} <b>({{$doctor->specialization}})</b> </option>
+                                            <option value="{{$doctor->id}}">Dr. {{$doctor->name}} <b>({{$doctor->docSpecialization->category}})</b> </option>
                                             @endforeach
                                         </select>
 
